@@ -1,7 +1,14 @@
 name:  Mooneer Workflows
 
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Pick on which environment you want to launch this workflow"
+        default: Production
+        required: false
 
+    
 jobs:
   build: 
     name: build app
@@ -10,4 +17,52 @@ jobs:
        - name: Checkout the repository
          uses: actions/checkout@v4.2.2
        - name: build 
-         run: echo building the app
+         run: echo "building the app"
+  Test: 
+    name: test app
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'workflow_dispatch' 
+    environment: 'Test'
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4.2.2
+      - name: test 
+        run: echo "Testing..."
+  LoadTest:
+    name: Load Test
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'workflow_dispatch' 
+    environment: 'LoadTest'
+    steps:
+      - name: Load Test 
+      - run: echo "Load Testing"
+  Production:
+    name: Production
+    runs-on: ubuntu-latest
+    needs: [Test, LoadTest]
+    if: github.event.inputs.environment == 'Production'
+    environment:
+      name: Production
+      url: https://writeabout.net
+    steps:
+        - run: |
+            echo "🚀 Step 1..."
+            sleep 10
+        - run: |
+            echo "🚀 Step 2..."
+            sleep 10
+        - run: |
+            echo "🚀 Step 3..."
+            sleep 10
+        - run: |
+            echo "🚀 Step 4..."
+            sleep 10
+        - run: |
+            echo "🚀 Step 5..."
+            sleep 10
+  
+    
+      
+        
