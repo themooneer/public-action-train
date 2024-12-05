@@ -38,7 +38,7 @@ jobs:
     environment: 'LoadTest'
     steps:
       - name: Load Test 
-      - run: |
+        run: |
           echo "Load Testing"
           sleep 15
   Production:
