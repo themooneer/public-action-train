@@ -6,7 +6,6 @@ on:
       environment:
         description: "Pick on which environment you want to launch this workflow"
         default: Production
-        required: false
 
     
 jobs:
@@ -28,7 +27,9 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4.2.2
       - name: test 
-        run: echo "Testing..."
+        run: |
+            echo "Testing..."
+
   LoadTest:
     name: Load Test
     runs-on: ubuntu-latest
@@ -37,7 +38,9 @@ jobs:
     environment: 'LoadTest'
     steps:
       - name: Load Test 
-      - run: echo "Load Testing"
+      - run: |
+          echo "Load Testing"
+          sleep 15
   Production:
     name: Production
     runs-on: ubuntu-latest
