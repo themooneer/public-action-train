@@ -1,0 +1,13 @@
+name:  Mooneer Workflows
+
+on: workflow_dispatch
+
+jobs:
+  build: 
+    name: build app
+    runs-on: ubuntu-latest
+    steps:
+       - name: Checkout the repository
+         uses: actions/checkout@v4.2.2
+       - name: build 
+         run: echo building the app
